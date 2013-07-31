@@ -19,12 +19,12 @@ module Hetzner
       attr_accessor :public_keys
       attr_accessor :bootstrap_cmd
       attr_accessor :logger
-      
+
       def initialize(options = {})
         @rescue_os     = 'linux'
         @rescue_os_bit = '64'
         @retries       = 0
-        @bootstrap_cmd = '/root/.oldroot/nfs/install/installimage -a -c /tmp/template'
+        @bootstrap_cmd = 'export TERM=xterm; /root/.oldroot/nfs/install/installimage -a -c /tmp/template'
         @login         = 'root'
 
         if tmpl = options.delete(:template)
@@ -53,7 +53,7 @@ module Hetzner
 
           logger.warn "problem while trying to activate rescue system (retries: #{@retries})"
           @api.disable_rescue! @ip
-          
+
           rolling_sleep
           enable_rescue_mode options
         end
@@ -184,7 +184,16 @@ module Hetzner
         logger.info output
       end
 
-      
+      def post_install_remote(options = {})
+        remote do |ssh|
+          @post_install_remote.split("\n").each do |cmd|
+            cmd.chomp!
+            logger.info "executing #{cmd}"
+            ssh.exec!(cmd)
+          end
+        end
+      end
+
       def render_template
         eruby = Erubis::Eruby.new @template.to_s
 
@@ -203,7 +212,7 @@ module Hetzner
         params[:ip]       = @ip
         params[:login]    = @login
         params[:password] = @password
-        
+
         return eruby.result(params)
       end
 
@@ -215,12 +224,12 @@ module Hetzner
         @logger = logger_obj
         @logger.formatter = default_log_formatter
       end
-      
+
       def remote(options = {}, &block)
 
         default = { :paranoid => false, :password => @password }
         default.merge! options
-        
+
         Net::SSH.start(@ip, @login, default) do |ssh|
           block.call ssh
         end

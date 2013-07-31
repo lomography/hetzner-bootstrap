@@ -3,6 +3,8 @@ hetzner-bootstrap
 
 hetzner-bootstrap allows you to bootstrap a provisioned EQ Server from hetzner.de
 
+[![Gem Version](https://badge.fury.io/rb/hetzner-bootstrap.png)](http://badge.fury.io/rb/hetzner-bootstrap)
+
 What it does:
 -------------
 
@@ -55,7 +57,7 @@ Warnings:
 Commercial Support available through:
 -------------------------------------
 
-[![Moriz GmbH](http://moriz.de/images/logo.png)](http://moriz.de/)
+[![Moriz GmbH](https://moriz.de/images/logo.png)](http://moriz.de/)
 
 [Moriz GmbH, München](http://moriz.de/)
 
@@ -63,4 +65,7 @@ Commercial Support available through:
 Copyright
 ---------
 
-Copyright (c) 2011 Moriz GmbH, Roland Moriz. See LICENSE file for details.
+Copyright © 2013 [Roland Moriz](https://roland.io), [Moriz GmbH](https://moriz.de/)
+
+[![LinkedIn](http://www.linkedin.com/img/webpromo/btn_viewmy_160x25.png)](http://www.linkedin.com/in/rmoriz)
+[![Twitter](http://i.imgur.com/1kYFHlu.png)](https://twitter.com/rmoriz)
